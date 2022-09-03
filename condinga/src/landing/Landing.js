@@ -33,7 +33,7 @@ export const Landing = () => {
                                 </Link>
                                 <ul>
                                     <li>
-                                        <Link to={'/register'}>Register</Link>
+                                        <Link to={'/signup'}>Register</Link>
                                     </li>
                                  
                                     <li>

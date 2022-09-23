@@ -1,6 +1,6 @@
 
 import { Landing } from './landing/Landing';
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { Feed } from './feed/feed';
 import TrainerBoard from './trainer/trainerBoard';
 import ProjectList from './projects/ProjectList';
@@ -9,31 +9,43 @@ import Trainees from './show/trainees';
 import Managers from './show/manager';
 import Trainers from './show/trainers';
 import ProjectDetails from './projects/ProjectDetails';
-import Signin from './auth/Signin';
+
 import Signup from './auth/Signup';
 import CreateProject from './projects/CreateProject';
+import { Signin } from './auth/Signin';
+import { useContext } from 'react';
+import { AuthContext, AuthContextProvider } from './context/AuthContext';
 
 
 function App() {
+
+  const {currentUser}= useContext(AuthContext)
+
+
+  const RequireAuth = ({ children }) => {
+    return currentUser ? children : <Navigate to="/login" />;
+  };
+  console.log(currentUser)
   return (
     <div >
-      
+   
+
       <Router>
         <Routes>
-          <Route exact path="/" element={<Landing />} />
-          <Route exact path="/feed" element={<Feed />} />
-          <Route exact path="/trainer" element={<TrainerBoard />} />
-          <Route exact path="/projects" element={<AllProjects/>} />
-          <Route exact path="/project" element={<ProjectDetails/>} />
-          <Route exact path="/trainees" element={<Trainees/>} />
-          <Route exact path="/trainers" element={<Trainers/>} />
-          <Route exact path="/managers" element={<Managers/>} />
-          <Route exact path="/login" element={<Signin/>} />
-          <Route exact path="/signup" element={<Signup/>} />
-          <Route exact path="/addproject" element={<CreateProject/>} />
+          <Route  path="/signup" element={<Signup />} />
+          <Route  path="/" element={<Landing />} />
+          <Route   path="/login" element={<Signin />} />
+          <Route  path="/feed" element={<RequireAuth><Feed /></RequireAuth>} />
+          <Route  path="/projects" element={<RequireAuth><AllProjects /></RequireAuth>} />
+          <Route  path="/trainer" element={<RequireAuth><TrainerBoard /></RequireAuth>} />
+          <Route  path="/project"  element={<RequireAuth><ProjectDetails /></RequireAuth>} />
+          <Route  path="/trainees" element={<RequireAuth><Trainees /></RequireAuth>} />
+          <Route  path="/trainers" element={<RequireAuth><Trainers /></RequireAuth>} />
+          <Route  path="/managers" element={<RequireAuth><Managers /></RequireAuth>} />
+          <Route  path="/addproject" element={<RequireAuth><CreateProject /></RequireAuth>} /> 
 
 
-          
+
 
 
 
@@ -41,6 +53,8 @@ function App() {
 
         </Routes>
       </Router>
+    
+
     </div>
   );
 }

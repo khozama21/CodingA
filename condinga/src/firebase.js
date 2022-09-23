@@ -1,8 +1,9 @@
 
 import { initializeApp } from "firebase/app";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCPseFo0JNbl4aDIXr8zrYkbdCx_tLoE40",
+  apiKey:"AIzaSyCPseFo0JNbl4aDIXr8zrYkbdCx_tLoE40",
   authDomain: "codinga-17970.firebaseapp.com",
   projectId: "codinga-17970",
   storageBucket: "codinga-17970.appspot.com",
@@ -12,3 +13,4 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+export const auth = getAuth();

@@ -3,30 +3,8 @@ import Footer from '../feed/Footer'
 import Nav from '../feed/Nav'
 
 class Signup extends Component {
-    state = {
-        email: '',
-        password: '',
-
-    }
-
-
-
-    handleChange = (e) => {
-
-
-        this.setState({
-            [e.target.id]: e.target.value
-        })
-
-    }
-
-    handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(this.state);
-
-
-
-    }
+ 
+ 
 
     render() {
 

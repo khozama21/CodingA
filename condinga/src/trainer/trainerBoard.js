@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import Footer from '../feed/Footer'
 import Nav from '../feed/Nav'
 import ProjectList from '../projects/ProjectList'
-import { connect } from 'react-redux'
 // import { useNavigate } from "react-router-dom";
 // import './board.css'
 
@@ -225,11 +224,6 @@ class TrainerBoard extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-      projects: state.project.projects
-    }
-  }
-  
 
-export default connect(mapStateToProps)(TrainerBoard)
+
+export default TrainerBoard

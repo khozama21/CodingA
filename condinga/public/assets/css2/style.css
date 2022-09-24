@@ -639,7 +639,7 @@ header.sticky {
     top: 50%;
     transform: translate(-50%, -50%);
     width: 800px;
-    height: 600px;
+    height: 700px;
 
 }
 
@@ -5353,7 +5353,7 @@ canvas {
 .form-group textarea.has-value,
 .form-group textarea:focus,
 .form-group textarea:valid {
-    color: #2a2a2a;
+    color: #c61919;
 }
 
 .row.widget-page {

@@ -1,129 +1,96 @@
-import React from 'react'
+import { collection, getDocs } from 'firebase/firestore';
+import React, { useState, useEffect } from 'react'
 import Footer from '../feed/Footer'
 import Nav from '../feed/Nav'
+import { db } from '../firebase';
 
 const Trainers = () => {
-  return (
-    <div>
 
 
-      <div class="theme-layout">
+    const [data, setData] = useState([]);
 
-        {/* <!-- responsive header --> */}
-        <Nav />
-        {/* <!-- topbar --> */}
+    useEffect(() => {
+        const fetchData = async () => {
+            let list = [];
+            try {
+                const querySnapshot = await getDocs(collection(db, "Users"));
+                querySnapshot.forEach((doc) => {
+                    list.push({ id: doc.id, ...doc.data() });
+                });
+                setData(list);
+                console.log(list);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        fetchData();
 
-        <div class="gap">
-          <div class="container-fluid">
+    }, [])
+    return (
+        <div>
 
-            <section   >
-              <div class="container py-5 h-100">
-                <div class="row d-flex justify-content-center align-items-center h-100">
-                  <div class="col-lg-4  ">
 
-                    <div class="card" style={{ borderRadius: "15px" }}>
-                      <div class="card-body text-center">
-                        <div class="mt-3 mb-4">
-                          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp"
-                            class="rounded-circle img-fluid" style={{ width: "100px" }} />
-                        </div>
-                        <h4 class="mb-2">Trainer name</h4>
-                        <p class="text-muted mb-4">@Programmer <span class="mx-2">|</span> <a
-                          href="#!">github link</a></p>
-                        <div class="mb-4 pb-2">
-                          <button type="button" class="btn btn-outline-primary btn-floating m-2">
-                            <i class="fa fa-facebook-f fa-lg"></i>
-                          </button>
-                          <button type="button" class="btn btn-outline-primary btn-floating m-2">
-                            <i class="fa fa-twitter fa-lg"></i>
-                          </button>
-                          <button type="button" class="btn btn-outline-primary btn-floating m-2">
-                            <i class="fa fa-google fa-lg"></i>
-                          </button>
-                        </div>
-                        <button type="button" class="btn btn-primary btn-rounded btn-lg">
-                          Message now
-                        </button>
 
-                      </div>
+            <div class="theme-layout">
+
+                <Nav />
+                <div class="gap">
+                    <div class="container-fluid">
+
+                        <section   >
+                            <div class="container py-5 h-100">
+                                <div class="row d-flex justify-content-center align-items-center h-100">
+                                    {data.map((user) => {
+                                        if (user.role == 1){
+                                        return (
+                                            <div class="col-lg-4" key={user.id}>
+                                            <div class="card" style={{ borderRadius: "15px" }}>
+                                                <div class="card-body text-center">
+                                                    <div class="mt-3 mb-4">
+                                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp"
+                                                            class="rounded-circle img-fluid" style={{ width: "100px" }} />
+                                                    </div>
+                                                    <h4 class="mb-2">{user.name}</h4>
+                                                    <p class="text-muted mb-4">@Programmer <span class="mx-2">|</span> <a
+                                                        href="#!">{user.gitlink}</a></p>
+                                                    <div class="mb-4 pb-2">
+                                                        <button type="button" class="btn btn-outline-primary btn-floating m-2">
+                                                            <i class="fa fa-facebook-f fa-lg"></i>
+                                                        </button>
+                                                        <button type="button" class="btn btn-outline-primary btn-floating m-2">
+                                                            <i class="fa fa-twitter fa-lg"></i>
+                                                        </button>
+                                                        <button type="button" class="btn btn-outline-primary btn-floating m-2">
+                                                            <i class="fa fa-google fa-lg"></i>
+                                                        </button>
+                                                    </div>
+                                                    <button type="button" class="btn btn-primary btn-rounded btn-lg">
+                                                        Message now
+                                                    </button>
+
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                        )}
+                                       
+                                    })}
+
+
+
+
+                                </div>
+
+                            </div>
+                        </section>
                     </div>
-
-
-                  </div>
-                  <div class="col-lg-4  ">
-
-                    <div class="card" style={{ borderRadius: "15px" }}>
-                      <div class="card-body text-center">
-                        <div class="mt-3 mb-4">
-                          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp"
-                            class="rounded-circle img-fluid" style={{ width: "100px" }} />
-                        </div> 
-                        <h4 class="mb-2">Trainer name</h4>
-                        <p class="text-muted mb-4">@Programmer <span class="mx-2">|</span> <a
-                          href="#!">github link</a></p>
-                        <div class="mb-4 pb-2">
-                          <button type="button" class="btn btn-outline-primary btn-floating m-2">
-                            <i class="fa fa-facebook-f fa-lg"></i>
-                          </button>
-                          <button type="button" class="btn btn-outline-primary btn-floating m-2">
-                            <i class="fa fa-twitter fa-lg"></i>
-                          </button>
-                          <button type="button" class="btn btn-outline-primary btn-floating m-2">
-                            <i class="fa fa-google fa-lg"></i>
-                          </button>
-                        </div>
-                        <button type="button" class="btn btn-primary btn-rounded btn-lg">
-                          Message now
-                        </button>
-
-                      </div>
-                    </div>
-
-
-                  </div><div class="col-lg-4  ">
-
-                    <div class="card" style={{ borderRadius: "15px" }}>
-                      <div class="card-body text-center">
-                        <div class="mt-3 mb-4">
-                          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp"
-                            class="rounded-circle img-fluid" style={{ width: "100px" }} />
-                        </div>
-                        <h4 class="mb-2">Trainer name</h4>
-                        <p class="text-muted mb-4">@Programmer <span class="mx-2">|</span> <a
-                          href="#!">github link</a></p>
-                        <div class="mb-4 pb-2">
-                          <button type="button" class="btn btn-outline-primary btn-floating m-2">
-                            <i class="fa fa-facebook-f fa-lg"></i>
-                          </button>
-                          <button type="button" class="btn btn-outline-primary btn-floating m-2">
-                            <i class="fa fa-twitter fa-lg"></i>
-                          </button>
-                          <button type="button" class="btn btn-outline-primary btn-floating m-2">
-                            <i class="fa fa-google fa-lg"></i>
-                          </button>
-                        </div>
-                        <button type="button" class="btn btn-primary btn-rounded btn-lg">
-                          Message now
-                        </button>
-
-                      </div>
-                    </div>
-
-
-                  </div>
-
                 </div>
-
-              </div>
-            </section>
-          </div>
+                <Footer />
+            </div>
         </div>
 
-      </div>
-      <Footer />
-
-    </div>
-  )
+    )
 }
 
 export default Trainers

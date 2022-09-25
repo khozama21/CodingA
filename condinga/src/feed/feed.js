@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import Footer from './Footer'
 import Nav from './Nav'
 
@@ -28,25 +29,27 @@ export const Feed = () => {
                                                     <ul class="naves">
                                                         <li>
                                                             <i class="fa fa-clipboard"></i>
-                                                            <a href="newsfeed.html" title="">News feed</a>
+                                                            <Link to={'/projects'} title="">Projects</Link>
                                                         </li>
                                                         <li>
                                                             <i class="fa fa-inbox"></i>
-                                                            <a href="inbox.html" title="">Inbox</a>
+                                                            <a href="inbox.html" title="">Assigments</a>
                                                         </li>
-                                                        <li>
-                                                            <i class="fa fa-file"></i>
-                                                            <a href="fav-page.html" title="">My Board</a>
-                                                        </li>
+                                                      
                                                         <li>
                                                             <i class="fa fa-bell"></i>
                                                             <a href="timeline-friends.html" title="">Announcments</a>
                                                         </li>
 
+                                                        {/* <li>
+                                                            <i class="fa fa-file"></i>
+                                                            <a href="fav-page.html" title="">Submissions</a>
+                                                        </li>
+
                                                         <li>
                                                             <i class="fa fa-power-off"></i>
-                                                            <a href="landing.html" title="">Logout</a>
-                                                        </li>
+                                                            <a href="landing.html" title="">Events</a>
+                                                        </li> */}
                                                     </ul>
                                                 </div>
                                                 {/* <!-- Shortcuts --> */}

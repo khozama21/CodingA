@@ -3,7 +3,7 @@ import { Landing } from './landing/Landing';
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { Feed } from './feed/feed';
 import TrainerBoard from './trainer/trainerBoard';
-import ProjectList from './projects/ProjectList';
+ 
 import AllProjects from './projects/AllProjects';
 import Trainees from './show/trainees';
 import Managers from './show/manager';
@@ -15,6 +15,8 @@ import CreateProject from './projects/CreateProject';
 import { Signin } from './auth/Signin';
 import { useContext } from 'react';
 import { AuthContext, AuthContextProvider } from './context/AuthContext';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from './firebase';
 
 
 function App() {
@@ -25,7 +27,9 @@ function App() {
   const RequireAuth = ({ children }) => {
     return currentUser ? children : <Navigate to="/login" />;
   };
-  console.log(currentUser)
+
+ 
+  
   return (
     <div >
    
@@ -38,7 +42,7 @@ function App() {
           <Route  path="/feed" element={<RequireAuth><Feed /></RequireAuth>} />
           <Route  path="/projects" element={<RequireAuth><AllProjects /></RequireAuth>} />
           <Route  path="/trainer" element={<RequireAuth><TrainerBoard /></RequireAuth>} />
-          <Route  path="/project"  element={<RequireAuth><ProjectDetails /></RequireAuth>} />
+          <Route  path="/project/:id"  element={<RequireAuth><ProjectDetails /></RequireAuth>} />
           <Route  path="/trainees" element={<RequireAuth><Trainees /></RequireAuth>} />
           <Route  path="/trainers" element={<RequireAuth><Trainers /></RequireAuth>} />
           <Route  path="/managers" element={<RequireAuth><Managers /></RequireAuth>} />

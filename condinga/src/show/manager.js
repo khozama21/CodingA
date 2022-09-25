@@ -51,18 +51,18 @@ const Managers = () => {
                                                                     class="rounded-circle img-fluid" style={{ width: "100px" }} />
                                                             </div>
                                                             <h4 class="mb-2">{user.name}</h4>
-                                                            <p class="text-muted mb-4">@Programmer <span class="mx-2">|</span> <a
-                                                                href="#!">{user.gitlink}</a></p>
+                                                            <p class="text-muted mb-4">Education: {user.education} <span class="mx-2">|</span> <a
+                                                                href="#!">{user.role}</a></p>
                                                             <div class="mb-4 pb-2">
-                                                                <button type="button" class="btn btn-outline-primary btn-floating m-2">
-                                                                    <i class="fa fa-facebook-f fa-lg"></i>
-                                                                </button>
-                                                                <button type="button" class="btn btn-outline-primary btn-floating m-2">
-                                                                    <i class="fa fa-twitter fa-lg"></i>
-                                                                </button>
-                                                                <button type="button" class="btn btn-outline-primary btn-floating m-2">
-                                                                    <i class="fa fa-google fa-lg"></i>
-                                                                </button>
+                                                                <a href={user.linkedlink} type="button" class="btn btn-outline-primary btn-floating m-2 text-light">
+                                                                    <i class="fa fa-linkedin fa-lg  "></i>
+                                                                </a>
+                                                                <a href={user.gitlink} type="button" class="btn btn-outline-primary btn-floating m-2">
+                                                                    <i class="fa fa-github fa-lg"></i>
+                                                                </a>
+                                                                <a href={user.email} type="button" class="btn btn-outline-primary btn-floating m-2">
+                                                                    <i class="fa fa-mail-reply fa-lg"></i>
+                                                                </a>
                                                             </div>
                                                             <button type="button" class="btn btn-primary btn-rounded btn-lg">
                                                                 Message now

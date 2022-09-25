@@ -1,9 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { auth } from '../firebase';
+ 
 import SignedLinks from './SignedLinks'
-import SignedOutLinks from './SignedOutLinks'
+ 
 
 const Nav = () => {
+    
     return (
         <div>
             <div class="topbar stick">
@@ -40,10 +43,10 @@ const Nav = () => {
                             </ul>
                         </li>
                         <li className='dropdown2'>
-                            <Link to={'/profile'} title="">Account</Link>
+                            <Link to={'/profile'} title=""> Account </Link>
                             <ul>
                             <SignedLinks />
-                            <SignedOutLinks/>
+                           
                             </ul>
 
                         </li>

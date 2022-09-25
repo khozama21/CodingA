@@ -7,6 +7,7 @@ import { collection, addDoc } from "firebase/firestore";
 import { async } from '@firebase/util';
 import { auth, db } from '../firebase';
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import swal from 'sweetalert';
 
 const Signup = () => {
     const [data, setData] = useState({});
@@ -34,7 +35,9 @@ const Signup = () => {
                 ...data,
                 timeStamp: serverTimestamp(),
             });
-            navigate(-1)
+            swal("Good job!", "Account Has Been Succesfully Created", "success").then((value) => {
+                navigate('/login');
+            });
         } catch (error) {
             console.log(error);
         }
@@ -63,37 +66,43 @@ const Signup = () => {
                                     </p>
                                     <form onSubmit={handleAdd}>
                                         <div class="form-group">
-                                            <input type="text" id="name" onChange={handleInput} />
+                                            <input type="text" id="name"  required onChange={handleInput} />
                                             <label class="control-label" for="input">Name</label>
                                             <i class="mtrl-select"></i>
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" id="email" onChange={handleInput} />
+                                            <input type="text" id="email" required onChange={handleInput} />
                                             <label class="control-label" for="input">Email</label>
                                             <i class="mtrl-select"></i>
                                         </div>
+                                        
                                         <div class="form-group">
-                                            <input type="password" id="password" onChange={handleInput} />
+                                            <input type="password" id="password"  required onChange={handleInput} />
                                             <label class="control-label" for="input">Password</label>
                                             <i class="mtrl-select"></i>
                                         </div>
                                         <div class="form-group">
-                                            <input type="date" id="dob" onChange={handleInput} />
+                                            <input type="date" id="dob"  required onChange={handleInput} />
                                             <label class="control-label" for="Date Of Birth">Date of Birth</label>
                                             <i class="mtrl-select"></i>
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" id="education" onChange={handleInput} />
+                                            <input type="text" id="education" required onChange={handleInput} />
                                             <label class="control-label" for="input">Education</label>
                                             <i class="mtrl-select"></i>
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" id="gitlink" onChange={handleInput} />
+                                            <input type="text" id="gitlink" required onChange={handleInput} />
                                             <label class="control-label"  >GitHub Account</label>
                                             <i class="mtrl-select"></i>
                                         </div>
+                                        <div class="form-group">
+                                            <input type="text" id="linkedlink" required onChange={handleInput} />
+                                            <label class="control-label"  >Linked Account</label>
+                                            <i class="mtrl-select"></i>
+                                        </div>
                                         <div class="form-group mb-3">
-                                            <select class="custom-select border-bottom  text-muted " style={{ color: '#2a2a2a' }} id="role" onChange={handleInput}>
+                                            <select class="custom-select border-bottom  text-muted " style={{ color: '#2a2a2a' }} id="role" required onChange={handleInput}>
                                                 <option selected >Choose Your Role</option>
                                                 <option value="0">Trainee</option>
                                                 <option value="1">Mentor/Trainer</option>

@@ -1,10 +1,41 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Footer from '../feed/Footer'
 import Nav from '../feed/Nav'
-import { Params } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
+import { collection, doc, getDoc, where } from 'firebase/firestore'
+import { db } from '../firebase'
 
-const ProjectDetails = (props) => {
-    // console.log(props);
+const ProjectDetails = () => {
+
+    const { projectId } = useParams();
+    const [title, setTitle] = useState('');
+    const [brief, setBrief] = useState('');
+    const [tech, setTech] = useState('');
+    // const [title, setTitle] = useState('');
+
+
+
+    
+    // useEffect(() => {
+    //     const fetchsingle = async () => {
+    //         const docRef = doc(db, "Projects", "1xFWXjuKSYFxS7rn4pFX");
+    //         const docSnap = await getDoc(docRef);
+            
+    //         if (docSnap.exists()) {
+    //           console.log("Document data:",   docSnap.data());
+    //            console.log(docSnap)
+    //         } else {
+               
+    //           console.log("No such document!");
+    //         }
+            
+    //     };
+    //     fetchsingle();
+
+    // }, [])
+  
+
+
     return (
         <div>
 
@@ -25,7 +56,7 @@ const ProjectDetails = (props) => {
                                         <div class="col col-xl-10">
                                             <div class="card mb-5" style={{ borderRadius: "15px" }}>
                                                 <div class="card-body p-4">
-                                                    <h3 class="mb-3">Project Title  </h3>
+                                                    <h3 class="mb-3">    </h3>
                                                     <p class="small mb-0"> technology <span class="mx-2">|</span> posted
                                                         <strong> </strong> on 11 April , 2021</p>
                                                     <hr class="my-4" />
@@ -35,11 +66,11 @@ const ProjectDetails = (props) => {
 
                                                 </div>
 
-                                                
+
                                             </div>
                                             <button type="button" class="btn  btn-floating pull-right ">
-                                                    <i class="fa fa-download mr-2"></i> Download Document
-                                                </button>
+                                                <i class="fa fa-download mr-2"></i> Download Document
+                                            </button>
                                         </div>
                                     </div>
                                 </div>

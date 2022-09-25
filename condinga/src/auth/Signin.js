@@ -13,28 +13,29 @@ export const Signin = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const {dispatch}= useContext(AuthContext)
+    const { dispatch } = useContext(AuthContext)
 
-    const navigate= useNavigate();
+    const navigate = useNavigate();
 
 
 
     const handlelogin = (e) => {
         e.preventDefault()
-        
+
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed in 
                 const user = userCredential.user;
-                dispatch({type:"LOGIN", payload:user})
-            //  dispatch({type:"LOGIN", payload:user})
+                dispatch({ type: "LOGIN", payload: user })
+                //  dispatch({type:"LOGIN", payload:user})
+        
+                    navigate('/feed')
+ 
 
-                navigate('/projects')
-              
             })
             .catch((error) => {
-               setError(true);
-            
+                setError(true);
+
             });
 
     }
@@ -43,7 +44,7 @@ export const Signin = () => {
 
 
             <div class="theme-layout">
-                
+
                 <div class="container-fluid pdng0">
                     <div class="row merged">
 
@@ -52,7 +53,7 @@ export const Signin = () => {
                                 <div class="log-reg-area sign">
                                     <h2 class="log-title text-center">Login</h2>
                                     <p class="text-center">
-                                        Don’t Have An Account Yet? 
+                                        Don’t Have An Account Yet?
                                         <a href="/home" title=""> Take the tour</a> or
                                         <a href="/Signup" title=""> Join now</a>
                                     </p>
@@ -61,12 +62,12 @@ export const Signin = () => {
                                     </div>}
                                     <form onSubmit={handlelogin} >
                                         <div class="form-group">
-                                            <input type="text" id="email" required="required" onChange={e=>setEmail(e.target.value)} />
+                                            <input type="text" id="email" required="required" onChange={e => setEmail(e.target.value)} />
                                             <label class="control-label" > Email </label>
                                             <i class="mtrl-select"></i>
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" id="password" required="required" onChange={e=>setPassword(e.target.value)}/>
+                                            <input type="password" id="password" required="required" onChange={e => setPassword(e.target.value)} />
                                             <label class="control-label" for="input">Password</label>
                                             <i class="mtrl-select"></i>
                                         </div>

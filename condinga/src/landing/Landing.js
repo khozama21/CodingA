@@ -1,8 +1,21 @@
+import { signOut } from 'firebase/auth';
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { auth } from '../firebase';
 // import './main'
 
 export const Landing = () => {
+    const user = auth.currentUser;
+
+    //    const handleLogout = (e) =>
+    //    {
+    //     signOut(auth).then(() => {
+    //         localStorage.setItem('user', null);
+
+    //       }).catch((error) => {
+    //          console.log(error)
+    //       });
+    //    }
     return (
         <div>
 
@@ -21,24 +34,30 @@ export const Landing = () => {
                                 <Link class="active " to={'/'} >Home</Link>
                             </li>
                             <li>
-                                <Link   to={'/about'} >About</Link>
+                                <Link to={'/about'} >About</Link>
                             </li>
                             <li>
-                                <Link   to={'/contact'}  >Contact Us</Link>
+                                <Link to={'/contact'}  >Contact Us</Link>
                             </li>
                             <li class="dropdown">
-                                <Link to={'/register'}>
+
+                                <Link to={'/signup'}>
                                     <span>Get Started</span>
                                     <i class="bi bi-chevron-down"></i>
                                 </Link>
+
                                 <ul>
                                     <li>
-                                        <Link to={'/signup'}>Register</Link>
+                                        <Link to={'/login'} >Login</Link>
                                     </li>
-                                 
                                     <li>
-                                        <Link   to={'/login'} >Login</Link>
+                                        <Link to={'/signup'}>Create an Account</Link>
                                     </li>
+
+
+                                    {/* <li>
+                                        <Link to={''}     >Logout </Link>
+                                    </li> */}
                                     {/* <!-- <li><a href="#">Drop Down 3</a></li>
                       <li><a href="#">Drop Down 4</a></li> --> */}
                                 </ul>

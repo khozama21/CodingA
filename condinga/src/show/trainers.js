@@ -42,6 +42,7 @@ const Trainers = () => {
                                 <div class="row d-flex justify-content-center align-items-center h-100">
                                     {data.map((user) => {
                                         if (user.role == 1){
+                                            const address = 'mailto:' + user.email;
                                         return (
                                             <div class="col-lg-4" key={user.id}>
                                             <div class="card" style={{ borderRadius: "15px" }}>
@@ -60,13 +61,13 @@ const Trainers = () => {
                                                         <a href={user.gitlink} type="button" class="btn btn-outline-primary btn-floating m-2">
                                                             <i class="fa fa-github fa-lg"></i>
                                                         </a>
-                                                        <a href={user.email} type="button" class="btn btn-outline-primary btn-floating m-2">
-                                                            <i class="fa fa-mail-reply fa-lg"></i>
+                                                        <a href={`mailto: ${user.email}`} type="button" class="btn btn-outline-primary btn-floating m-2 text-light">
+                                                            <i class="fa fa-envelope fa-lg"></i>
                                                         </a>
                                                     </div>
-                                                    <button type="button" class="btn btn-primary btn-rounded btn-lg">
+                                                    {/* <button type="button" class="btn btn-primary btn-rounded btn-lg">
                                                         Message now
-                                                    </button>
+                                                    </button> */}
 
                                                 </div>
                                             </div>

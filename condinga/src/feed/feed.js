@@ -1,5 +1,7 @@
-import React from 'react'
+import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { db } from '../firebase'
 import Footer from './Footer'
 import Nav from './Nav'
 
@@ -9,12 +11,53 @@ import Nav from './Nav'
 
 
 export const Feed = () => {
+    const [anns, setAnns] = useState([]);
+    const [ranns, setranns] = useState([]);
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            let annlist = [];
+            try {
+                const q = query(collection(db, "Announcements"), orderBy('number', "desc"));
+                const querySnapshot = await getDocs(q);
+                querySnapshot.forEach((doc) => {
+                    annlist.push({ id: doc.id, ...doc.data() });
+                });
+                setAnns(annlist);
+
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        fetchData();
+
+    }, [])
+    useEffect(() => {
+        const fetchData = async () => {
+            let alist = [];
+            try {
+                const q = query(collection(db, "Announcements"),limit(3));
+                const querySnapshot = await getDocs(q);
+                querySnapshot.forEach((doc) => {
+                    alist.push({ id: doc.id, ...doc.data() });
+                });
+                setranns(alist);
+                console.log(alist)
+
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        fetchData();
+
+    }, [])
     return (
         <div>
             <div class="theme-layout">
-                
+
                 {/* <!-- responsive header --> */}
-               <Nav/>
+                <Nav />
                 {/* <!-- topbar --> */}
                 <section>
                     <div class="gap  ">
@@ -33,12 +76,12 @@ export const Feed = () => {
                                                         </li>
                                                         <li>
                                                             <i class="fa fa-inbox"></i>
-                                                            <a href="inbox.html" title="">Assigments</a>
+                                                            <a href="/tasks" title="">Assigments</a>
                                                         </li>
-                                                      
+
                                                         <li>
                                                             <i class="fa fa-bell"></i>
-                                                            <a href="timeline-friends.html" title="">Announcments</a>
+                                                            <a href="/announcements" title="">Announcments</a>
                                                         </li>
 
                                                         {/* <li>
@@ -54,40 +97,25 @@ export const Feed = () => {
                                                 </div>
                                                 {/* <!-- Shortcuts --> */}
                                                 <div class="widget">
-                                                    <h4 class="widget-title">Recent Events</h4>
+                                                    <h4 class="widget-title">Recent Announcements</h4>
                                                     <ul class="activitiez">
-                                                        <li>
-                                                            <div class="activity-meta">
-                                                                <i>10 hours Ago</i>
-                                                                <span>
-                                                                    <a href="#" title="">A project was posted</a>
-                                                                </span>
-                                                                <h6>by
-                                                                    <a href="time-line.html">author name</a>
-                                                                </h6>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="activity-meta">
-                                                                <i>10 hours Ago</i>
-                                                                <span>
-                                                                    <a href="#" title="">A project was posted</a>
-                                                                </span>
-                                                                <h6>by
-                                                                    <a href="time-line.html">author name</a>
-                                                                </h6>
-                                                            </div>
-                                                        </li>  <li>
-                                                            <div class="activity-meta">
-                                                                <i>10 hours Ago</i>
-                                                                <span>
-                                                                    <a href="#" title="">A project was posted</a>
-                                                                </span>
-                                                                <h6>by
-                                                                    <a href="time-line.html">author name</a>
-                                                                </h6>
-                                                            </div>
-                                                        </li>
+                                                    {
+                                                        ranns.map((rann) => (
+
+                                                                <li>
+                                                                    <div class="activity-meta" key={rann.id}>
+                                                                        <i>10 hours Ago</i>
+                                                                        <span>
+                                                                            <h5 href={''}title="" >{rann.title}</h5>
+                                                                        </span>
+                                                                       <p> {rann.brief}</p>
+                                                                    </div>
+                                                                </li>
+
+
+
+                                                            ))
+                                                        }
 
 
 
@@ -98,7 +126,8 @@ export const Feed = () => {
                                         </div>
                                         {/* <!-- sidebar --> */}
                                         <div class="col-lg-9">
-                                            <div class="central-meta">
+
+                                            {/* <div class="central-meta"  >
                                                 <div class="new-postbox">
                                                     <figure>
                                                         <img src="images/resources/admin2.jpg" alt="" />
@@ -123,33 +152,34 @@ export const Feed = () => {
                                                         </form>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> */}
+
                                             {/* <!-- add post new box --> */}
                                             <div class="loadMore">
-                                                <div class="central-meta item">
-                                                    <div class="user-post">
-                                                        <div class="friend-info">
-                                                            <figure>
+                                                {anns.map((ann) => (
+                                                    <div class="central-meta item" key={ann.id}>
+                                                        <div class="user-post">
+                                                            <div class="friend-info">
+                                                                {/* <figure>
                                                                 <img src="images/resources/friend-avatar10.jpg" alt="" />
-                                                            </figure>
-                                                            <div class="friend-name">
-                                                                <ins>
-                                                                    <a href="time-line.html" title="">Janice Griffith</a>
-                                                                </ins>
-                                                                <span>published: june,2 2018 19:PM</span>
-                                                            </div>
-                                                            
-                                                            {/* <!-- post content + comments --> */}
-                                                            <div class="description">
-                                                                <p>
-                                                                    World's most beautiful car in Curabitur
-                                                                    <a href="#" title="">#test drive booking !</a>
-                                                                    the most beatuiful car available in america and the saudia arabia, you can book your test drive by our official website
-                                                                </p>
+                                                            </figure> */}
+                                                                <div class="friend-name">
+                                                                
+                                                                    <ins>
+                                                                        <h2> <span class='text-muted'> Annoucement {ann.number} </span> <span>| </span>{ann.title}</h2>
+                                                                    </ins>
+                                                                    <span>published: june,2 2018 19:PM</span>
+                                                                </div>
+
+                                                                {/* <!-- post content + comments --> */}
+                                                                <div class="description">
+                                                                    <p>
+                                                                        {ann.brief} </p>
+                                                                        <a href={ann.details} > {ann.details}</a>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="coment-area">
+                                                        {/* <div class="coment-area">
                                                         <ul class="we-comet">
                                                             <li>
                                                                 <div class="comet-avatar">
@@ -258,251 +288,12 @@ export const Feed = () => {
                                                                 </div>
                                                             </li>
                                                         </ul>
+                                                    </div> */}
                                                     </div>
-                                                </div>
+                                                ))}
                                             </div>
-                                            <div class="central-meta item">
-                                                <div class="user-post">
-                                                    <div class="friend-info">
-                                                        <figure>
-                                                            <img src="images/resources/nearly1.jpg" alt="" />
-                                                        </figure>
-                                                        <div class="friend-name">
-                                                            <ins>
-                                                                <a href="time-line.html" title="">Sara Grey</a>
-                                                            </ins>
-                                                            <span>published: june,2 2018 19:PM</span>
-                                                        </div>
-                                                        <div class="post-meta">
-                                                            <iframe
-                                                                src="https://player.vimeo.com/video/15232052"
-                                                                height="315"
-                                                                webkitallowfullscreen
-                                                                mozallowfullscreen
-                                                                allowfullscreen
-                                                            ></iframe>
-
-                                                            <div class="description">
-                                                                <p>
-                                                                    Lonely Cat Enjoying in Summer Curabitur
-                                                                    <a href="#" title="">#mypage</a>
-                                                                    ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc,
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="coment-area">
-                                                        <ul class="we-comet">
-                                                            <li>
-                                                                <div class="comet-avatar">
-                                                                    <img src="images/resources/comet-1.jpg" alt="" />
-                                                                </div>
-                                                                <div class="we-comment">
-                                                                    <div class="coment-head">
-                                                                        <h5>
-                                                                            <a href="time-line.html" title="">Jason borne</a>
-                                                                        </h5>
-                                                                        <span>1 year ago</span>
-                                                                        <a class="we-reply" href="#" title="Reply">
-                                                                            <i class="fa fa-reply"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                    <p>we are working for the dance and sing songs. this video is very awesome for the youngster. please vote this video and like our channel</p>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="comet-avatar">
-                                                                    <img src="images/resources/comet-2.jpg" alt="" />
-                                                                </div>
-                                                                <div class="we-comment">
-                                                                    <div class="coment-head">
-                                                                        <h5>
-                                                                            <a href="time-line.html" title="">Sophia</a>
-                                                                        </h5>
-                                                                        <span>1 week ago</span>
-                                                                        <a class="we-reply" href="#" title="Reply">
-                                                                            <i class="fa fa-reply"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                    <p>
-                                                                        we are working for the dance and sing songs. this video is very awesome for the youngster.
-                                                                        <i class="em em-smiley"></i>
-                                                                    </p>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" title="" class="showmore underline">more comments</a>
-                                                            </li>
-                                                            <li class="post-comment">
-                                                                <div class="comet-avatar">
-                                                                    <img src="images/resources/comet-2.jpg" alt="" />
-                                                                </div>
-                                                                <div class="post-comt-box">
-                                                                    <form method="post">
-                                                                        <textarea placeholder="Post your comment"></textarea>
-                                                                        <div class="add-smiles">
-                                                                            <span class="em em-expressionless" title="add icon"></span>
-                                                                        </div>
-                                                                        <div class="smiles-bunch">
-                                                                            <i class="em em---1"></i>
-                                                                            <i class="em em-smiley"></i>
-                                                                            <i class="em em-anguished"></i>
-                                                                            <i class="em em-laughing"></i>
-                                                                            <i class="em em-angry"></i>
-                                                                            <i class="em em-astonished"></i>
-                                                                            <i class="em em-blush"></i>
-                                                                            <i class="em em-disappointed"></i>
-                                                                            <i class="em em-worried"></i>
-                                                                            <i class="em em-kissing_heart"></i>
-                                                                            <i class="em em-rage"></i>
-                                                                            <i class="em em-stuck_out_tongue"></i>
-                                                                        </div>
-                                                                        <button type="submit"></button>
-                                                                    </form>
-                                                                </div>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="central-meta item">
-                                                <div class="user-post">
-                                                    <div class="friend-info">
-                                                        <figure>
-                                                            <img src="images/resources/nearly6.jpg" alt="" />
-                                                        </figure>
-                                                        <div class="friend-name">
-                                                            <ins>
-                                                                <a href="time-line.html" title="">Sophia</a>
-                                                            </ins>
-                                                            <span>published: january,5 2018 19:PM</span>
-                                                        </div>
-                                                        <div class="post-meta">
-                                                            <div class="post-map">
-                                                                <div class="nearby-map">
-                                                                    <div id="map-canvas"></div>
-                                                                </div>
-                                                            </div>
-
-
-                                                            <div class="description">
-                                                                <p>
-                                                                    Curabitur Lonely Cat Enjoying in Summer
-                                                                    <a href="#" title="">#mypage</a>
-                                                                    ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc,
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="coment-area">
-                                                        <ul class="we-comet">
-                                                            <li>
-                                                                <div class="comet-avatar">
-                                                                    <img src="images/resources/comet-1.jpg" alt="" />
-                                                                </div>
-                                                                <div class="we-comment">
-                                                                    <div class="coment-head">
-                                                                        <h5>
-                                                                            <a href="time-line.html" title="">Jason borne</a>
-                                                                        </h5>
-                                                                        <span>1 year ago</span>
-                                                                        <a class="we-reply" href="#" title="Reply">
-                                                                            <i class="fa fa-reply"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                    <p>we are working for the dance and sing songs. this video is very awesome for the youngster. please vote this video and like our channel</p>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="comet-avatar">
-                                                                    <img src="images/resources/comet-2.jpg" alt="" />
-                                                                </div>
-                                                                <div class="we-comment">
-                                                                    <div class="coment-head">
-                                                                        <h5>
-                                                                            <a href="time-line.html" title="">Sophia</a>
-                                                                        </h5>
-                                                                        <span>1 week ago</span>
-                                                                        <a class="we-reply" href="#" title="Reply">
-                                                                            <i class="fa fa-reply"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                    <p>
-                                                                        we are working for the dance and sing songs. this video is very awesome for the youngster.
-                                                                        <i class="em em-smiley"></i>
-                                                                    </p>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" title="" class="showmore underline">more comments</a>
-                                                            </li>
-                                                            <li class="post-comment">
-                                                                <div class="comet-avatar">
-                                                                    <img src="images/resources/comet-2.jpg" alt="" />
-                                                                </div>
-                                                                <div class="post-comt-box">
-                                                                    <form method="post">
-                                                                        <textarea placeholder="Post your comment"></textarea>
-                                                                        <div class="add-smiles">
-                                                                            <span class="em em-expressionless" title="add icon"></span>
-                                                                        </div>
-                                                                        <div class="smiles-bunch">
-                                                                            <i class="em em---1"></i>
-                                                                            <i class="em em-smiley"></i>
-                                                                            <i class="em em-anguished"></i>
-                                                                            <i class="em em-laughing"></i>
-                                                                            <i class="em em-angry"></i>
-                                                                            <i class="em em-astonished"></i>
-                                                                            <i class="em em-blush"></i>
-                                                                            <i class="em em-disappointed"></i>
-                                                                            <i class="em em-worried"></i>
-                                                                            <i class="em em-kissing_heart"></i>
-                                                                            <i class="em em-rage"></i>
-                                                                            <i class="em em-stuck_out_tongue"></i>
-                                                                        </div>
-                                                                        <button type="submit"></button>
-                                                                    </form>
-                                                                </div>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="central-meta item">
-                                                <div class="user-post">
-                                                    <div class="friend-info">
-                                                        <figure>
-                                                            <img alt="" src="images/resources/friend-avatar10.jpg" />
-                                                        </figure>
-                                                        <div class="friend-name">
-                                                            <ins>
-                                                                <a title="" href="time-line.html">Janice Griffith</a>
-                                                            </ins>
-                                                            <span>published: june,2 2018 19:PM</span>
-                                                        </div>
-                                                        <div class="description">
-                                                            <p>
-                                                                Curabitur World's most beautiful car in
-                                                                <a title="" href="#">#test drive booking !</a>
-                                                                the most beatuiful car available in america and the saudia arabia, you can book your test drive by our official website
-                                                            </p>
-                                                        </div>
-                                                        <div class="post-meta">
-                                                            <div class="linked-image align-left">
-                                                                <a title="" href="#">
-                                                                    <img alt="" src="images/resources/page1.jpg" />
-                                                                </a>
-                                                            </div>
-                                                            <div class="detail">
-                                                                <span>Love Maid - ChillGroves</span>
-                                                                <p>Lorem ipsum dolor sit amet, consectetur ipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...</p>
-                                                                <a title="" href="#">www.sample.com</a>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                             
+                                          
                                         </div>
                                     </div>
 
@@ -515,9 +306,8 @@ export const Feed = () => {
             </div>
 
 
-
-            {/* <!-- ======= Footer ======= --> */}
-           <Footer/>
+ 
+            <Footer />
 
         </div>
     )

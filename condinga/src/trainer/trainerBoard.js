@@ -1,17 +1,18 @@
-import { onAuthStateChanged } from 'firebase/auth';
+ 
 import { collection, getDocs, limit, query } from 'firebase/firestore';
-import React, { Component, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Footer from '../feed/Footer'
 import Nav from '../feed/Nav'
 import { auth, db } from '../firebase';
-import ProjectSummary from '../projects/ProjectSummary';
-
-// import { useNavigate } from "react-router-dom";
-// import './board.css'
+ 
 
 
 const TrainerBoard = () => {
     const [recenprojects, setrecentProjects] = useState([]);
+    const [rtasks, setrecentTasks] = useState([]);
+
+    const [ranns, setranns] = useState([]);
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -24,6 +25,44 @@ const TrainerBoard = () => {
                 });
                 setrecentProjects(rplist);
                 console.log(rplist)
+
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        fetchData();
+
+    }, [])
+    useEffect(() => {
+        const fetchData = async () => {
+            let tlist = [];
+            try {
+                const q = query(collection(db, "Assignments"),limit(3));
+                const querySnapshot = await getDocs(q);
+                querySnapshot.forEach((doc) => {
+                    tlist.push({ id: doc.id, ...doc.data() });
+                });
+                 setrecentTasks(tlist);
+                console.log(tlist)
+
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        fetchData();
+
+    }, [])
+    useEffect(() => {
+        const fetchData = async () => {
+            let alist = [];
+            try {
+                const q = query(collection(db, "Announcements"),limit(3));
+                const querySnapshot = await getDocs(q);
+                querySnapshot.forEach((doc) => {
+                    alist.push({ id: doc.id, ...doc.data() });
+                });
+                setranns(alist);
+                console.log(alist)
 
             } catch (err) {
                 console.log(err);
@@ -90,7 +129,7 @@ const TrainerBoard = () => {
                                                             recenprojects.map((rproject) => (
 
                                                                 <li>
-                                                                    <div class="activity-meta">
+                                                                    <div class="activity-meta" key={rproject.id}>
                                                                         <i>10 hours Ago</i>
                                                                         <span>
                                                                             <a href={rproject.details}title="" >{rproject.title}</a>
@@ -123,43 +162,65 @@ const TrainerBoard = () => {
                                             <div class="widget">
                                                     <h4 class="widget-title">Recent Tasks</h4>
                                                     <ul class="activitiez">
-                                                        <li>
-                                                            <div class="activity-meta">
-                                                                <i>10 hours Ago</i>
-                                                                <span>
-                                                                    <a href="#" title="">A project was posted</a>
-                                                                </span>
-                                                                <h6>by
-                                                                    <a href="time-line.html">author name</a>
-                                                                </h6>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="activity-meta">
-                                                                <i>10 hours Ago</i>
-                                                                <span>
-                                                                    <a href="#" title="">A project was posted</a>
-                                                                </span>
-                                                                <h6>by
-                                                                    <a href="time-line.html">author name</a>
-                                                                </h6>
-                                                            </div>
-                                                        </li>  <li>
-                                                            <div class="activity-meta">
-                                                                <i>10 hours Ago</i>
-                                                                <span>
-                                                                    <a href="#" title="">A project was posted</a>
-                                                                </span>
-                                                                <h6>by
-                                                                    <a href="time-line.html">author name</a>
-                                                                </h6>
-                                                            </div>
-                                                        </li>
+                                                    {
+                                                            rtasks.map((rtask) => (
 
+                                                                <li>
+                                                                    <div class="activity-meta" key={rtask.id}>
+                                                                        <i>10 hours Ago</i>
+                                                                        <span>
+                                                                            <a href={rtask.details}title="" >{rtask.title}</a>
+                                                                        </span>
+                                                                        <h6>
+                                                                    Tehchnology: 
+                                                                            <a href="time-line.html"> {rtask.technology}</a>
+                                                                        </h6>
+                                                                    </div>
+                                                                </li>
+
+
+
+                                                            ))
+                                                        }
 
 
                                                     </ul>
-                                                    <button className=' btn  btn-primary pull-right m-4'>Add Tasks </button>
+                                                    <a href='/addTask' className=' btn  btn-primary pull-right m-4'>Add Tasks </a>
+
+                                                </div>
+
+                                            </aside>
+                                        </div>
+                                        
+                                        <div class="container-fluid col-lg-12">
+
+                                            <aside class="sidebar static">
+                                                 
+
+                                            <div class="widget">
+                                                    <h4 class="widget-title">Recent Tasks</h4>
+                                                    <ul class="activitiez">
+                                                    {
+                                                        ranns.map((rann) => (
+
+                                                                <li>
+                                                                    <div class="activity-meta" key={rann.id}>
+                                                                        <i>10 hours Ago</i>
+                                                                        <span>
+                                                                            <h5 href={''}title="" >{rann.title}</h5>
+                                                                        </span>
+                                                                       <p> {rann.brief}</p>
+                                                                    </div>
+                                                                </li>
+
+
+
+                                                            ))
+                                                        }
+
+
+                                                    </ul>
+                                                    <a href='/addann' className=' btn  btn-primary pull-right m-4'>Add Announcement </a>
 
                                                 </div>
 

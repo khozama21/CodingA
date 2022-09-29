@@ -21,6 +21,7 @@ import AllTasks from './tasks/AllTasks';
 import CreateTask from './tasks/CreateTask';
 import CreateAnn from './announcments/CreateAnn';
 import AllAnns from './announcments/allA';
+ 
 
 
 function App() {
@@ -55,7 +56,9 @@ function App() {
           <Route  path="/addproject" element={<RequireAuth><CreateProject /></RequireAuth>} />
           <Route  path="/addtask" element={<RequireAuth><CreateTask /></RequireAuth>} /> 
           <Route  path="/addann" element={<RequireAuth><CreateAnn /></RequireAuth>} /> 
+          <Route  path="/admindash" element={<RequireAuth><dash /></RequireAuth>} /> 
 
+      
 
 
 

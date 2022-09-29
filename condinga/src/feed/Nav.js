@@ -1,11 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { auth } from '../firebase';
+import { auth ,useAuthState} from '../firebase';
  
 import SignedLinks from './SignedLinks'
  
 
 const Nav = () => {
+
+     
     
     return (
         <div>
@@ -36,6 +38,7 @@ const Nav = () => {
                                 <li>
                                     <Link to={'/feed'} title="">Feed</Link>
                                 </li>
+                              
                                 <li>
                                     <a href="/trainer" title="">MyBoard</a>
                                 </li>
